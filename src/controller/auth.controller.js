@@ -13,9 +13,26 @@ exports.signup = async (req, res) => {
 
   try {
     const user = await newUser.save();
-    res
-      .status(201)
-      .json({ message: "User was registered successfully!", success: true });
+
+    const token = jwt.sign(
+      { id: user._id.toString() },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: 86400, // 24 hours
+      }
+    );
+
+    res.status(200).json({
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      roles: user.role,
+      accessToken: token,
+    });
+    // res
+    //   .status(201)
+    //   .json({ message: "User was registered successfully!", success: true });
   } catch (err) {
     res.status(500).json(err);
   }

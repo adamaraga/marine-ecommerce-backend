@@ -1,11 +1,33 @@
 const Product = require("../models/Product");
 
 exports.addProduct = async (req, res) => {
-  const newProduct = new Product(req.body);
+  if (
+    !req.body.name ||
+    !req.body.discription ||
+    !req.body.price ||
+    !req.body.category ||
+    !req.body.stock
+  ) {
+    res.status(400).json({ message: "Incomplete Product Data" });
+    return;
+  }
+
+  const newProduct = new Product({
+    img: req.file.path,
+    name: req.body.name,
+    discription: req.body.discription,
+    price: req.body.price,
+    oldPrice: req.body.oldPrice,
+    category: req.body.category,
+    stock: req.body.stock,
+    weight: req.body.weight,
+    bestSeller: req.body.bestSeller,
+    wholeSale: req.body.wholeSale,
+  });
 
   try {
-    const product = await newProduct.save();
-    res.status(201).json(product);
+    await newProduct.save();
+    res.status(201).json({ message: "Product added successfully" });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -68,6 +90,52 @@ exports.getProductsByBestSeller = async (req, res) => {
   try {
     const products = await Product.paginate(
       { bestSeller: true },
+      {
+        limit,
+        page,
+      }
+    );
+
+    const { docs, totalPages } = products;
+
+    res.status(200).json({ products: docs, totalPages, limit });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+exports.getProductsByWholeSale = async (req, res) => {
+  const limit = 10;
+  const page = req.params.page;
+
+  try {
+    const products = await Product.paginate(
+      { wholeSale: true },
+      {
+        limit,
+        page,
+      }
+    );
+
+    const { docs, totalPages } = products;
+
+    res.status(200).json({ products: docs, totalPages, limit });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+exports.getProductsBySearch = async (req, res) => {
+  const limit = 10;
+  const page = req.params.page;
+
+  const { query } = req.params;
+  const rgx = (pattern) => new RegExp(`.*${pattern}.*`);
+  const searchRgx = rgx(query);
+
+  try {
+    const products = await Product.paginate(
+      { name: { $regex: searchRgx, $options: "i" } },
       {
         limit,
         page,

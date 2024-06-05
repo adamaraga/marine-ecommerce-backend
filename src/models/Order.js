@@ -15,7 +15,6 @@ const OrderSchema = new mongoose.Schema(
           ref: "Product",
           required: true,
         },
-        img: { type: Buffer },
         name: String,
         quantity: {
           type: Number,
@@ -41,8 +40,7 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       ref: "Address",
     },
-    paymentMethod: { type: String },
-    paymentId: { type: String },
+    paymentId: { type: String, required: true },
     paymentStatus: {
       type: String,
       required: true,

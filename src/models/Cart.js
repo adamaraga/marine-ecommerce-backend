@@ -6,6 +6,7 @@ const CartSchema = new mongoose.Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     product: {
       productId: {
@@ -13,19 +14,15 @@ const CartSchema = new mongoose.Schema(
         ref: "Product",
         required: true,
       },
-      img: { type: Buffer },
-      name: { type: String, required: true },
       quantity: {
         type: Number,
         required: true,
         min: 1,
         default: 1,
       },
-      price: { type: Number, required: true },
     },
     bill: {
       type: Number,
-      required: true,
       default: 0,
     },
   },

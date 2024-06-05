@@ -17,17 +17,10 @@ const AddressSchema = new mongoose.Schema(
     city: { type: String, required: true },
     state: { type: String, required: true },
     zipCode: { type: String, required: true },
-    zipCode: { type: String, required: true },
     phone: { type: String, required: true },
     email: {
       type: String,
       required: true,
-      lowercase: true,
-      validate(value) {
-        if (!validator.isEmail(value)) {
-          throw new Error("Email is invalid");
-        }
-      },
     },
     addresstype: {
       type: String,

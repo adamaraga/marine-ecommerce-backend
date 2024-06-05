@@ -8,6 +8,7 @@ const cartRoute = require("./src/routes/cart.routes");
 const orderRoute = require("./src/routes/order.routes");
 const productRoute = require("./src/routes/product.routes");
 const userRoute = require("./src/routes/user.routes");
+const messageRoute = require("./src/routes/message.routes");
 
 const app = express();
 
@@ -23,12 +24,16 @@ mongoose
 
 app.use(express.json());
 
+app.use(express.static(__dirname + "/public"));
+app.use("/uploads", express.static("uploads"));
+
 app.use("/api/auth", authRoute);
 app.use("/api/address", addressRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/product", productRoute);
 app.use("/api/user", userRoute);
+app.use("/api/message", messageRoute);
 
 let port = process.env.PORT;
 

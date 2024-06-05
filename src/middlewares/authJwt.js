@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 verifyToken = (req, res, next) => {
-  let accesstoken = req.headers["Authorization"];
+  let accesstoken = req.headers["authorization"];
+  // console.log(req.headers);
 
   if (!accesstoken?.startsWith("Bearer ")) {
     return res.status(403).json({ message: "No token provided!" });
@@ -22,12 +23,9 @@ verifyToken = (req, res, next) => {
   });
 };
 
-isAdmin = (req, res, next) => {
-  User.findById(req.userId).exec((err, user) => {
-    if (err) {
-      res.status(500).json({ err });
-      return;
-    }
+isAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId);
 
     if (user.role !== "admin") {
       res.status(403).json({ message: "Require Admin Role!" });
@@ -36,7 +34,9 @@ isAdmin = (req, res, next) => {
 
     next();
     return;
-  });
+  } catch (error) {
+    res.status(500).json(err);
+  }
 };
 
 const authJwt = {
