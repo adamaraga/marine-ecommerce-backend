@@ -47,6 +47,8 @@ const OrderSchema = new mongoose.Schema(
       enum: ["Initiated", "Success", "Failed"],
     },
     orderNote: { type: String },
+    shippingMethod: { type: String, required: true },
+    shippingAmount: { type: Number, required: true },
   },
   { timestamps: true }
 );

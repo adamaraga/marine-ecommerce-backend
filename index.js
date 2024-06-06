@@ -9,6 +9,7 @@ const orderRoute = require("./src/routes/order.routes");
 const productRoute = require("./src/routes/product.routes");
 const userRoute = require("./src/routes/user.routes");
 const messageRoute = require("./src/routes/message.routes");
+const countRoute = require("./src/routes/count.routes");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/api/order", orderRoute);
 app.use("/api/product", productRoute);
 app.use("/api/user", userRoute);
 app.use("/api/message", messageRoute);
+app.use("/api/count", countRoute);
 
 let port = process.env.PORT;
 

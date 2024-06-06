@@ -4,6 +4,8 @@ const {
   addToOrderDiffAddress,
   orderSuccess,
   getOrdersForUser,
+  getOrdersBySearch,
+  getOrder,
 } = require("../controller/order.controller");
 const authJwt = require("../middlewares/authjwt");
 
@@ -17,6 +19,14 @@ router.put("/success/:orderId", orderSuccess);
 
 router.get("/user/:userId", [authJwt.verifyToken], getOrdersForUser);
 
-router.get("/:page", [authJwt.verifyToken, authJwt.isAdmin], getOrders);
+router.get("/all/:page", [authJwt.verifyToken, authJwt.isAdmin], getOrders);
+
+router.get(
+  "/search/:query/:page",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  getOrdersBySearch
+);
+
+router.get("/:id", [authJwt.verifyToken, authJwt.isAdmin], getOrder);
 
 module.exports = router;

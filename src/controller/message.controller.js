@@ -18,7 +18,7 @@ exports.addMessage = async (req, res) => {
 };
 
 exports.getMessages = async (req, res) => {
-  const limit = 10;
+  const limit = 9;
   const page = req.params.page;
 
   try {

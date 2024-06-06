@@ -159,3 +159,42 @@ exports.getOrders = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+exports.getOrdersBySearch = async (req, res) => {
+  const limit = 10;
+  const page = req.params.page;
+
+  const { query } = req.params;
+  const rgx = (pattern) => new RegExp(`.*${pattern}.*`);
+  const searchRgx = rgx(query);
+
+  try {
+    const orders = await Order.paginate(
+      {
+        $or: [{ paymentId: { $regex: searchRgx, $options: "i" } }],
+      },
+      {
+        limit,
+        page,
+      }
+    );
+
+    const { docs, totalPages } = orders;
+
+    res.status(200).json({ orders: docs, totalPages, limit });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+exports.getOrder = async (req, res) => {
+  try {
+    const order = await Order.findById({ _id: req.params.id }).populate(
+      "billingAddress"
+    );
+
+    res.status(200).json(order);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

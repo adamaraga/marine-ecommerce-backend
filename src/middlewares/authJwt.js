@@ -35,7 +35,7 @@ isAdmin = async (req, res, next) => {
     next();
     return;
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };
 
