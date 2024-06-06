@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const fs = require("fs");
 
 exports.addProduct = async (req, res) => {
   if (
@@ -184,6 +185,11 @@ exports.updateProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
   try {
+    const product = await Product.findById({ _id: req.params.id });
+
+    if (product?.img) {
+      fs.unlinkSync(`./${product.img}`);
+    }
     await Product.deleteOne({ _id: req.params.id });
 
     res.status(200).json({ message: "Product deleted successfully" });
