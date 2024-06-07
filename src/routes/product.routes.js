@@ -9,7 +9,7 @@ const {
   getProductsByWholeSale,
   getProductsBySearch,
 } = require("../controller/product.controller");
-const authJwt = require("../middlewares/authjwt");
+const authJwt = require("../middlewares/authJwt");
 
 const router = require("express").Router();
 const multer = require("multer");

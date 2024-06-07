@@ -1,5 +1,5 @@
 const { getCount } = require("../controller/count.controller");
-const authJwt = require("../middlewares/authjwt");
+const authJwt = require("../middlewares/authJwt");
 
 const router = require("express").Router();
 

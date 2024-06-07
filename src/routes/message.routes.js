@@ -3,7 +3,7 @@ const {
   getMessages,
   getMessage,
 } = require("../controller/message.controller");
-const authJwt = require("../middlewares/authjwt");
+const authJwt = require("../middlewares/authJwt");
 
 const router = require("express").Router();
 

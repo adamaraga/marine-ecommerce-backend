@@ -7,7 +7,7 @@ const {
   getOrdersBySearch,
   getOrder,
 } = require("../controller/order.controller");
-const authJwt = require("../middlewares/authjwt");
+const authJwt = require("../middlewares/authJwt");
 
 const router = require("express").Router();
 

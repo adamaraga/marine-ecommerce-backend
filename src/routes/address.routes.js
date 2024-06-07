@@ -3,7 +3,7 @@ const {
   updateAddress,
   getUserAddress,
 } = require("../controller/address.controller");
-const authJwt = require("../middlewares/authjwt");
+const authJwt = require("../middlewares/authJwt");
 
 const router = require("express").Router();
 

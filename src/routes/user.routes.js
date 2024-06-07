@@ -3,7 +3,7 @@ const {
   getUsers,
   getUsersBySearch,
 } = require("../controller/user.controller");
-const authJwt = require("../middlewares/authjwt");
+const authJwt = require("../middlewares/authJwt");
 
 const router = require("express").Router();
 
