@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema(
     },
     password: { type: String, required: true },
     role: { type: String, required: true, enum: ["admin", "user"] },
+    isLocked: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

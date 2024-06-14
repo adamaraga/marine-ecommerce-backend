@@ -16,6 +16,8 @@ const app = express();
 app.use(cors());
 dotenv.config();
 
+app.set("view engine", "ejs");
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("DB Connection Successfull"))
